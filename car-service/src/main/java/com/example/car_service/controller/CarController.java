@@ -2,15 +2,18 @@ package com.example.car_service.controller;
 
 import com.example.car_service.data.Car;
 import com.example.car_service.service.CarService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/api/cars")
-public class CarController {
+@RequestMapping("/cars")
 
+public class CarController {
+    @Autowired
     private final CarService service;
 
     public CarController(CarService service) {
@@ -47,17 +50,15 @@ public class CarController {
         service.deleteCar(id);
     }
 
-    // Update only car status
+    //Update status from other microservices
     @PutMapping("/{id}/status")
     public ResponseEntity<?> updateStatus(@PathVariable Long id,
                                           @RequestParam String value) {
 
         Car updated = service.updateCarStatus(id, value);
 
-        if (updated == null) {
-            return ResponseEntity.notFound().build();
-        }
-
         return ResponseEntity.ok(updated);
     }
+
+
 }
