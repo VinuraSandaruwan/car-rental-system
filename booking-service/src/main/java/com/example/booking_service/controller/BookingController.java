@@ -2,6 +2,7 @@ package com.example.booking_service.controller;
 
 import com.example.booking_service.data.Booking;
 import com.example.booking_service.service.BookingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,10 +10,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/api/bookings")
+@RequestMapping("/bookings")
 public class BookingController {
 
+    @Autowired
     private final BookingService service;
 
     public BookingController(BookingService service) {
