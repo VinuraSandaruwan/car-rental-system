@@ -2,15 +2,18 @@ package com.example.maintenance_service.controller;
 
 import com.example.maintenance_service.data.CarMaintenance;
 import com.example.maintenance_service.service.CarMaintenanceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/api/maintenance")
+@RequestMapping("/maintenances")
 public class CarMaintenanceController {
 
+    @Autowired
     private final CarMaintenanceService service;
 
     public CarMaintenanceController(CarMaintenanceService service) {
@@ -56,17 +59,12 @@ public class CarMaintenanceController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // COMPLETE maintenance
     @PutMapping("/{id}/complete")
     public ResponseEntity<?> complete(@PathVariable Long id) {
         CarMaintenance updated = service.completeMaintenance(id);
-
-        if (updated == null) {
-            return ResponseEntity.notFound().build();
-        }
-
         return ResponseEntity.ok(updated);
     }
+
 
     // DELETE record
     @DeleteMapping("/{id}")
@@ -74,4 +72,6 @@ public class CarMaintenanceController {
         service.deleteRecord(id);
         return ResponseEntity.noContent().build();
     }
+
+
 }
