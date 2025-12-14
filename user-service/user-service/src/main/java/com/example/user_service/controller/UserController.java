@@ -2,16 +2,19 @@ package com.example.user_service.controller;
 
 import com.example.user_service.data.User;
 import com.example.user_service.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/users")
 public class UserController {
 
+    @Autowired
     private final UserService service;
 
     public UserController(UserService service) {
